@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<link rel="stylesheet"
+href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="card" style="text-align:center;">
+
+<h1>Hasil Prediksi</h1>
+
+
+<!-- =====================================================
+     HASIL PREDIKSI
+====================================================== -->
+
+{% if hasil == "Sehat" %}
+
+<div class="badge healthy">
+🟢 HEALTHY
+</div>
+
+<p>
+Berdasarkan data yang dimasukkan, model CatBoost memprediksi
+bahwa kondisi kesehatan termasuk kategori <b>Healthy</b>.
+</p>
+
+{% else %}
+
+<div class="badge diseased">
+🔴 DISEASED
+</div>
+
+<p>
+Berdasarkan data yang dimasukkan, model CatBoost memprediksi
+bahwa kondisi kesehatan termasuk kategori <b>Diseased</b>.
+</p>
+
+{% endif %}
+
+
+<!-- =====================================================
+     PROBABILITAS PREDIKSI
+     SELALU DITAMPILKAN
+====================================================== -->
+
+<hr>
+
+<h3>Probabilitas Prediksi</h3>
+
+<p>
+    Healthy:
+    <strong>
+        {{ "%.2f"|format(prob_healthy) }}%
+    </strong>
+</p>
+
+<p>
+    Diseased:
+    <strong>
+        {{ "%.2f"|format(prob_diseased) }}%
+    </strong>
+</p>
+
+
+<!-- =====================================================
+     KINERJA MODEL
+     SELALU DITAMPILKAN
+====================================================== -->
+
+<hr>
+
+<h3>Kinerja Model</h3>
+
+<table style="margin: 0 auto;">
+
+    <tr>
+        <th>Metrik</th>
+        <th>Healthy</th>
+        <th>Diseased</th>
+    </tr>
+
+    <tr>
+        <td>Precision</td>
+
+        <td>
+            {{ "%.2f"|format(precision_healthy) }}%
+        </td>
+
+        <td>
+            {{ "%.2f"|format(precision_diseased) }}%
+        </td>
+    </tr>
+
+    <tr>
+        <td>Recall</td>
+
+        <td>
+            {{ "%.2f"|format(recall_healthy) }}%
+        </td>
+
+        <td>
+            {{ "%.2f"|format(recall_diseased) }}%
+        </td>
+    </tr>
+
+    <tr>
+        <td>F1-Score</td>
+
+        <td>
+            {{ "%.2f"|format(f1_healthy) }}%
+        </td>
+
+        <td>
+            {{ "%.2f"|format(f1_diseased) }}%
+        </td>
+    </tr>
+
+</table>
+
+
+<p>
+
+    <strong>
+        Accuracy keseluruhan:
+    </strong>
+
+    {{ "%.2f"|format(accuracy) }}%
+
+</p>
+
+
+<!-- =====================================================
+     TOMBOL PREDIKSI LAGI
+====================================================== -->
+
+<a href="/">
+
+<button>
+    Prediksi Lagi
+</button>
+
+</a>
+
+
+</div>
+
+</div>
+
+</body>
+
+</html>

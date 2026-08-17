@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Klasifikasi Sehat dan Tidak Sehat Berdasarkan Gaya Hidup</title>
+
+    <link rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<h1>Klasifikasi Sehat dan Tidak Sehat Berdasarkan Gaya Hidup</h1>
+
+<form action="/predict" method="POST">
+
+    <!-- ================= DATA PRIBADI ================= -->
+
+    <h2>Data Pribadi</h2>
+
+    <div class="form-grid">
+
+        <div class="form-group">
+            <label>Usia</label>
+            <input type="number" step="any" name="age" min="0" max="150" required>
+        </div>
+
+        <div class="form-group">
+            <label>Jenis Kelamin</label>
+            <select name="gender">
+                <option value="Male">Laki-laki</option>
+                <option value="Female">Perempuan</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Tinggi Badan (cm)</label>
+            <input type="number"
+       step="any"
+       min="0"
+       name="height"
+       id="height"
+       max ="250"
+       required>
+        </div>
+
+        <div class="form-group">
+            <label>Berat Badan (kg)</label>
+            <input type="number"
+       step="any"
+       min="0"
+       name="weight"
+       id="weight"
+       max = "300"
+       required>
+        </div>
+
+        <div class="form-group">
+            <label>BMI</label>
+            <input type="number"
+           step="0.01"
+           name="bmi"
+           id="bmi"
+           readonly
+           required>
+        </div>
+
+        <div class="form-group">
+            <label>Lingkar Pinggang (cm)</label>
+            <input type="number" step="any" name="waist_size" min="0" required>
+        </div>
+
+    </div>
+
+    <hr>
+
+    <!-- ================= KESEHATAN ================= -->
+
+    <h2>Data Pemeriksaan Kesehatan</h2>
+    <p class="section-note">
+    Masukkan nilai berdasarkan hasil pemeriksaan kesehatan terakhir.
+    </p>
+
+    <div class="form-grid">
+
+        <div class="form-group">
+            <label>Tekanan Darah (mmHg)</label>
+            <input type="number"
+            step="any"
+            name="blood_pressure"
+            placeholder="Contoh: 120"
+            min="0"
+            required>
+        </div>
+
+        <div class="form-group">
+            <label>Detak Jantung (bpm)</label>
+            <input type="number"
+            step="any"
+            name="heart_rate"
+            placeholder="Contoh: 80"
+            min="0"
+            required>
+        </div>
+
+        <div class="form-group">
+            <label>Kolesterol (mg/dL)</label>
+            <input type="number"
+            step="any"
+            name="cholesterol"
+            placeholder="Contoh: 200"
+            min="0"
+            required>
+        </div>
+
+        <div class="form-group">
+            <label>Glukosa (mg/dL)</label>
+            <input type="number"
+            step="any"
+            name="glucose"
+            placeholder="Contoh: 100"
+            min="0"
+            required>
+        </div>
+
+        <div class="form-group">
+            <label>Insulin (μU/mL)</label>
+            <input type="number"
+            step="any"
+            name="insulin"
+            placeholder="Contoh: 100"
+            min="0"
+            required>
+        </div>
+
+    </div>
+
+    <hr>
+
+    <!-- ================= TIDUR ================= -->
+
+    <h2>Tidur dan Aktivitas</h2>
+
+    <div class="form-grid">
+
+        <div class="form-group">
+            <label>Jam Tidur (jam)</label>
+            <input type="number" step="any" name="sleep_hours" min="0" max="24" placeholder="Contoh: 8" required>
+        </div>
+
+        <div class="form-group">
+            <label>Kualitas Tidur</label>
+            <select name="sleep_quality">
+                <option value="Poor">Buruk</option>
+                <option value="Fair">Cukup</option>
+                <option value="Good">Baik</option>
+                <option value="Excellent">Sangat Baik</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Jam Kerja (jam)</label>
+            <input type="number" step="any" name="work_hours" min="0" max="24" required>
+        </div>
+
+        <div class="form-group">
+            <label>Aktivitas Fisik (jam)</label>
+            <input type="number" step="any" name="physical_activity" min="0" required>
+        </div>
+
+        <div class="form-group">
+            <label>Langkah Harian (langkah)</label>
+            <input type="number" step="any" name="daily_steps" min="0" max="10000" required>
+        </div>
+
+    </div>
+
+    <hr>
+
+    <!-- ================= POLA MAKAN ================= -->
+
+    <h2>Pola Makan</h2>
+
+    <div class="form-grid">
+
+        <div class="form-group">
+            <label>Asupan Kalori (kkal)</label>
+            <input type="number" step="any" name="calorie_intake" min="0" required>
+        </div>
+
+        <div class="form-group">
+            <label>Asupan Gula (g)</label>
+            <input type="number" step="any" name="sugar_intake" min="0" required>
+        </div>
+
+        <div class="form-group">
+            <label>Makan Per Hari</label>
+            <input type="number" step="any" name="meals_per_day" min="1" max="10" step="1" required>
+        </div>
+
+        <div class="form-group">
+            <label>Asupan Kafein (mg)</label>
+            <select name="caffeine_intake">
+                <option value="Unknown">Tidak Pernah</option>
+                <option value="Moderate">Sedang</option>
+                <option value="High">Tinggi</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Asupan Air (ml)</label>
+            <input type="number" step="any" name="water_intake" min="0" required>
+        </div>
+
+    </div>
+
+    <hr>
+
+    <!-- ================= GAYA HIDUP ================= -->
+
+    <h2>Gaya Hidup</h2>
+
+    <div class="form-grid">
+
+        <div class="form-group">
+            <label>Asupan Alkohol</label>
+            <select name="alcohol_consumption">
+                <option value="Unknown">Tidak Pernah</option>
+                <option value="Occasionally">Sesekali</option>
+                <option value="Regularly">Rutin</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Tingkat Merokok</label>
+            <select name="smoking_level">
+                <option value="Non-smoker">Bukan Perokok</option>
+                <option value="Light">Ringan</option>
+                <option value="Heavy">Berat</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Waktu Layar</label>
+            <input type="number" step="any" name="screen_time" min="0" required>
+        </div>
+
+        <div class="form-group">
+            <label>Level Stress</label>
+            <input type="number" step="any" name="stress_level" placeholder="Contoh: 5" min="0" max="10" required>
+        </div>
+
+    </div>
+
+    <hr>
+
+    <!-- ================= KATEGORI AKTIVITAS ================= -->
+
+    <h2>Kategori Aktivitas</h2>
+
+    <div class="form-grid">
+
+        <div class="form-group">
+            <label>Tipe Diet</label>
+            <select name="diet_type">
+                <option value="Balanced">Seimbang</option>
+                <option value="High Protein">Tinggi Protein</option>
+                <option value="Low Carb">Rendah Karbohidrat</option>
+                <option value="Vegetarian">Vegetarian</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Tipe Latihan</label>
+            <select name="exercise_type">
+                <option value="Cardio">Kardio</option>
+                <option value="Strength">Latihan Kekuatan</option>
+                <option value="Yoga">Yoga</option>
+                <option value="None">Tidak Ada</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label> Penggunaan Perangkat</label>
+            <select name="device_usage">
+                <option value="Low">Rendah</option>
+                <option value="Moderate">Sedang</option>
+                <option value="High">Tinggi</option>
+            </select>
+        </div>
+
+    </div>
+
+    <br>
+
+    <button type="submit">
+        Prediksi
+    </button>
+
+</form>
+
+<script>
+
+const tinggi = document.getElementById("height");
+const berat = document.getElementById("weight");
+const bmi = document.getElementById("bmi");
+
+function hitungBMI(){
+
+    let h = parseFloat(tinggi.value);
+    let w = parseFloat(berat.value);
+
+    if(!isNaN(h) && !isNaN(w) && h > 0){
+
+        // cm -> meter
+        h = h / 100;
+
+        let hasil = w / (h*h);
+
+        bmi.value = hasil.toFixed(2);
+    }
+    else{
+        bmi.value = "";
+    }
+
+}
+
+tinggi.addEventListener("input", hitungBMI);
+berat.addEventListener("input", hitungBMI);
+
+</script>
+</body>
+</html>
